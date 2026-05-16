@@ -1,0 +1,17 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+node_modules/
+.next/
+out/
+dist/
+build/
+
+*.log
+.DS_Store
+Thumbs.db
+
+wepesi-mvp.zip
