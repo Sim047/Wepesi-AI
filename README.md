@@ -1,8 +1,8 @@
 # Wepesi
 
-Wepesi is an AI-native African fintech compliance MVP for Kenya to Nigeria payments and remittance expansion.
+Wepesi is an AI-native African fintech compliance platform for Kenya to Nigeria payments and remittance expansion.
 
-The MVP gives a fintech team a structured licensing view, compliance checklist, timeline, risk notes, and regulatory references using a FastAPI backend, a Next.js dashboard, PostgreSQL, Qdrant, and OpenAI-powered RAG.
+The platform gives fintech teams a structured licensing view, compliance checklist, document inventory, timeline, risk notes, and regulatory references using a FastAPI backend, a Next.js dashboard, PostgreSQL, Qdrant, and OpenAI-powered RAG.
 
 ## Monorepo Layout
 
@@ -12,6 +12,15 @@ frontend/  Next.js 14 app router UI
 infra/     Docker Compose and deployment notes
 docs/      Architecture, database schema, implementation plan
 ```
+
+## Core Features
+
+- Email/password registration and JWT login
+- Role-based users: first user becomes admin, later users are general users
+- Admin-only regulation upload for PDF, TXT, and Markdown files
+- Text extraction, chunking, embedding, and Qdrant indexing
+- User-specific compliance requests and report access
+- Structured AI compliance reports with categorized document requirements
 
 ## Quick Start
 
@@ -41,7 +50,7 @@ python backend/scripts/init_db.py
 - Backend API: http://localhost:8000/docs
 - Qdrant: http://localhost:6333/dashboard
 
-## MVP Scope
+## Initial Scope
 
 The first working path is intentionally narrow:
 

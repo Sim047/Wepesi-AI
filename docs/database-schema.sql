@@ -5,6 +5,7 @@ CREATE TABLE users (
   email VARCHAR(255) UNIQUE NOT NULL,
   password_hash VARCHAR(255) NOT NULL,
   company_name VARCHAR(255),
+  role VARCHAR(30) NOT NULL DEFAULT 'user',
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -61,10 +62,28 @@ CREATE TABLE regulatory_chunks (
   regulation_id UUID REFERENCES regulations(id),
   country VARCHAR(120) NOT NULL,
   regulator VARCHAR(255) NOT NULL,
+  category VARCHAR(120),
+  license_type VARCHAR(160),
   title VARCHAR(255) NOT NULL,
   chunk_text TEXT NOT NULL,
   qdrant_point_id VARCHAR(120),
   metadata_json JSONB NOT NULL
+);
+
+CREATE TABLE regulation_documents (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  country_name VARCHAR(120) NOT NULL,
+  regulator_name VARCHAR(255) NOT NULL,
+  regulation_category VARCHAR(120) NOT NULL,
+  license_type VARCHAR(160) NOT NULL,
+  document_title VARCHAR(255) NOT NULL,
+  source_url TEXT,
+  notes TEXT,
+  stored_file_path TEXT NOT NULL,
+  original_filename VARCHAR(255) NOT NULL,
+  content_type VARCHAR(120) NOT NULL,
+  uploaded_by_user_id UUID REFERENCES users(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 CREATE TABLE ai_generations (

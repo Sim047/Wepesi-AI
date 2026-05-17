@@ -1,58 +1,86 @@
 # API Routes
 
+The backend mounts both clean production paths and `/api` compatibility paths.
+
 ## Health
 
 `GET /health`
 
-Returns service status.
-
 ## Auth
 
-`POST /api/auth/register`
+`POST /auth/register`
 
-Creates a user and returns a JWT.
+Creates a user and returns a JWT. The first registered user is assigned `admin`; later users are assigned `user`.
 
-`POST /api/auth/login`
+`POST /auth/login`
 
 Authenticates a user and returns a JWT.
 
+`GET /auth/me`
+
+Returns the current authenticated user.
+
+## Admin
+
+`POST /admin/regulations/upload`
+
+Admin-only multipart upload for regulatory source documents.
+
+Fields:
+
+- `country_name`
+- `regulator_name`
+- `regulation_category`
+- `license_type`
+- `document_title`
+- `source_url`
+- `notes`
+- `file`
+
+Supported file types: PDF, TXT, Markdown.
+
+`GET /admin/regulations`
+
+Admin-only list of uploaded regulation documents.
+
 ## Compliance
 
-`POST /api/compliance/analyze`
+`POST /compliance/analyze`
 
-Request:
+Authenticated user route. Creates a compliance request, retrieves relevant regulatory chunks, generates a structured report, and stores it under the current user.
 
-```json
-{
-  "home_country": "Kenya",
-  "target_country": "Nigeria",
-  "business_type": "Fintech startup",
-  "transaction_model": "Cross-border payments and remittance",
-  "product_category": "Payments/remittance",
-  "holds_customer_funds": true,
-  "cross_border_transfers": true,
-  "feature_flags": ["payments", "remittance", "wallets"]
-}
-```
+`GET /compliance/reports`
 
-Response:
+Returns reports owned by the current user.
+
+`GET /compliance/reports/{id}`
+
+Returns a single report owned by the current user.
+
+## Report JSON
 
 ```json
 {
-  "request_id": "uuid",
-  "report_id": "uuid",
-  "report": {
-    "executive_summary": "",
-    "license_category": "",
-    "license_reasoning": "",
-    "required_documents": [],
-    "capital_requirements": "",
-    "estimated_timeline": "",
-    "compliance_steps": [],
-    "regulatory_references": [],
-    "risks": [],
-    "next_actions": []
-  }
+  "executive_summary": "",
+  "license_category": "",
+  "license_reasoning": "",
+  "required_documents": [],
+  "capital_requirements": "",
+  "estimated_timeline": "",
+  "compliance_steps": [],
+  "categorized_documents": {
+    "licensing_documents": [],
+    "company_documents": [],
+    "aml_kyc_documents": [],
+    "financial_documents": [],
+    "technical_documents": [],
+    "risk_and_governance_documents": [],
+    "consumer_protection_documents": [],
+    "data_protection_documents": []
+  },
+  "regulatory_references": [],
+  "risks": [],
+  "next_actions": []
 }
 ```
 
@@ -60,4 +88,4 @@ Response:
 
 `GET /api/references`
 
-Returns the seed CBK and CBN knowledge base entries.
+Returns seed CBK and CBN knowledge base entries.

@@ -11,6 +11,7 @@ import { baselineReport } from "@/lib/baseline-report";
 
 export default function ReportsPage() {
   const [data, setData] = useState<ComplianceResponse>(baselineReport);
+  const categorizedDocuments = data.report.categorized_documents ?? baselineReport.report.categorized_documents;
 
   useEffect(() => {
     const raw = sessionStorage.getItem("wepesi:lastReport");
@@ -53,6 +54,28 @@ export default function ReportsPage() {
             </div>
             <Panel title="Why this pathway matters">{data.report.license_reasoning}</Panel>
             <Panel title="Capital and budget questions">{data.report.capital_requirements}</Panel>
+            <section className="rounded-lg border border-line bg-white p-5 shadow-sm">
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">Categorized compliance documents</h2>
+              <div className="mt-4 grid gap-4 md:grid-cols-2">
+                {Object.entries(categorizedDocuments).map(([category, documents]) => (
+                  <div key={category} className="rounded-md bg-slate-50 p-4">
+                    <h3 className="text-sm font-semibold capitalize text-ink">{category.replaceAll("_", " ")}</h3>
+                    <div className="mt-3 space-y-3">
+                      {documents.map((document) => (
+                        <div key={document.document_name} className="rounded-md bg-white p-3 text-sm shadow-sm">
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="font-semibold text-ink">{document.document_name}</div>
+                            <span className="rounded-md bg-mint px-2 py-1 text-xs font-semibold text-signal">{document.priority}</span>
+                          </div>
+                          <p className="mt-2 leading-6 text-slate-600">{document.purpose}</p>
+                          <p className="mt-2 text-xs text-slate-500">{document.required_by}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
             <section className="rounded-lg border border-line bg-white p-5 shadow-sm">
               <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">Execution plan</h2>
               <div className="mt-4 space-y-3">

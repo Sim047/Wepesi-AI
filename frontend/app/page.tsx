@@ -40,7 +40,10 @@ export default function HomePage() {
               </Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href="/dashboard">Open command center</Link>
+              <Link href="/register">Create workspace</Link>
+            </Button>
+            <Button asChild variant="ghost">
+              <Link href="/login">Log in</Link>
             </Button>
           </div>
           <div className="mt-8 grid max-w-3xl gap-3 sm:grid-cols-3">

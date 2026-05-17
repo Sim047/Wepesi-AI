@@ -12,6 +12,10 @@ services:
         sync: false
       - key: QDRANT_COLLECTION
         value: regulatory_chunks
+      - key: UPLOAD_DIR
+        value: uploads/regulations
+      - key: MAX_UPLOAD_BYTES
+        value: 10485760
       - key: OPENAI_API_KEY
         sync: false
       - key: OPENAI_MODEL

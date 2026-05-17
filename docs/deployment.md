@@ -61,6 +61,20 @@ Expected health check:
 https://wepesi-api.onrender.com/health
 ```
 
+## Railway Backend
+
+Railway can also run the backend from `backend/Dockerfile`.
+
+Use:
+
+```text
+Root directory: backend
+Build: Dockerfile
+Health check path: /health
+```
+
+Set the same environment variables listed for Render.
+
 ## Vercel Frontend
 
 Set the frontend environment variable:
@@ -74,3 +88,7 @@ Vercel builds from the root and delegates to `frontend/` through `vercel.json`.
 ## Security Note
 
 The Wepesi tables are intended for backend-only database access. If Supabase client access is introduced in the frontend, enable Row Level Security and add policies before exposing keys to browsers.
+
+## Email Note
+
+Resend is not a backend hosting target. Use Resend only for email workflows such as account verification, password reset, report delivery, and admin notifications.

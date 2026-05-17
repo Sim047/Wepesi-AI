@@ -15,6 +15,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
     password_hash: Mapped[str] = mapped_column(String(255))
     company_name: Mapped[str | None] = mapped_column(String(255))
+    role: Mapped[str] = mapped_column(String(30), default="user", server_default="user")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
@@ -87,10 +88,30 @@ class RegulatoryChunk(Base):
     regulation_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("regulations.id"), nullable=True)
     country: Mapped[str] = mapped_column(String(120), index=True)
     regulator: Mapped[str] = mapped_column(String(255))
+    category: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    license_type: Mapped[str | None] = mapped_column(String(160), nullable=True)
     title: Mapped[str] = mapped_column(String(255))
     chunk_text: Mapped[str] = mapped_column(Text)
     qdrant_point_id: Mapped[str | None] = mapped_column(String(120))
     metadata_json: Mapped[dict] = mapped_column(JSON)
+
+
+class RegulationDocument(Base):
+    __tablename__ = "regulation_documents"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    country_name: Mapped[str] = mapped_column(String(120), index=True)
+    regulator_name: Mapped[str] = mapped_column(String(255))
+    regulation_category: Mapped[str] = mapped_column(String(120), index=True)
+    license_type: Mapped[str] = mapped_column(String(160), index=True)
+    document_title: Mapped[str] = mapped_column(String(255))
+    source_url: Mapped[str | None] = mapped_column(Text)
+    notes: Mapped[str | None] = mapped_column(Text)
+    stored_file_path: Mapped[str] = mapped_column(Text)
+    original_filename: Mapped[str] = mapped_column(String(255))
+    content_type: Mapped[str] = mapped_column(String(120))
+    uploaded_by_user_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
 class AIGeneration(Base):

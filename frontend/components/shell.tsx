@@ -1,8 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import type { Route } from "next";
-import { FileText, LayoutDashboard, Library, Menu, ShieldCheck } from "lucide-react";
+import { FileText, LayoutDashboard, Library, Menu, ShieldCheck, UploadCloud } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import { WepesiLogo } from "@/components/logo";
+import { getCurrentUser, type User } from "@/lib/api";
 
 const nav: Array<{ href: Route; label: string; icon: typeof LayoutDashboard }> = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -12,6 +16,14 @@ const nav: Array<{ href: Route; label: string; icon: typeof LayoutDashboard }> =
 ];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    getCurrentUser().then(setUser).catch(() => setUser(null));
+  }, []);
+
+  const visibleNav = user?.role === "admin" ? [...nav, { href: "/admin" as Route, label: "Admin", icon: UploadCloud }] : nav;
+
   return (
     <div className="min-h-screen bg-paper">
       <header className="sticky top-0 z-20 border-b border-line bg-white/90 px-4 py-3 backdrop-blur lg:hidden">
@@ -22,7 +34,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <Menu className="h-5 w-5 text-slate-500" />
         </div>
         <nav className="mt-3 flex gap-2 overflow-x-auto">
-          {nav.map((item) => (
+          {visibleNav.map((item) => (
             <Link key={item.href} href={item.href} className="whitespace-nowrap rounded-md border border-line px-3 py-2 text-xs font-medium text-slate-700">
               {item.label}
             </Link>
@@ -34,7 +46,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <WepesiLogo />
         </Link>
         <nav className="mt-10 space-y-1">
-          {nav.map((item) => (
+          {visibleNav.map((item) => (
             <Link
               key={item.href}
               href={item.href}

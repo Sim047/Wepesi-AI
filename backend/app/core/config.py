@@ -10,6 +10,8 @@ class Settings(BaseSettings):
     database_url: str = "postgresql+asyncpg://wepesi:wepesi_dev_password@localhost:5432/wepesi"
     qdrant_url: str = "http://localhost:6333"
     qdrant_collection: str = "regulatory_chunks"
+    upload_dir: str = "uploads/regulations"
+    max_upload_bytes: int = 10 * 1024 * 1024
     openai_api_key: str = ""
     openai_model: str = "gpt-5"
     openai_embedding_model: str = "text-embedding-3-small"
