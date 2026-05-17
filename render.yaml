@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: wepesi-api
+    runtime: docker
+    plan: free
+    rootDir: backend
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: QDRANT_URL
+        sync: false
+      - key: QDRANT_COLLECTION
+        value: regulatory_chunks
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-5
+      - key: OPENAI_EMBEDDING_MODEL
+        value: text-embedding-3-small
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: CORS_ORIGINS
+        sync: false
