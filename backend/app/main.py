@@ -1,3 +1,4 @@
+from asyncpg.exceptions import PostgresError
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -53,3 +54,8 @@ async def database_exception_handler(request: Request, exc: SQLAlchemyError) -> 
             "code": "DATABASE_UNAVAILABLE",
         },
     )
+
+
+@app.exception_handler(PostgresError)
+async def postgres_exception_handler(request: Request, exc: PostgresError) -> JSONResponse:
+    return await database_exception_handler(request, exc)
