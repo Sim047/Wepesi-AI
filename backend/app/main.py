@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
 
 from app.api.routes import admin, auth, compliance, references
 from app.core.config import settings
+from app.db.session import engine
 
 app = FastAPI(
     title="Wepesi API",
@@ -30,4 +32,6 @@ app.include_router(admin.router, prefix="/admin", tags=["admin"])
 
 @app.get("/health")
 async def health() -> dict[str, str]:
-    return {"status": "ok", "service": "wepesi-api"}
+    async with engine.connect() as connection:
+        await connection.execute(text("select 1"))
+    return {"status": "ok", "service": "wepesi-api", "database": "ok"}
