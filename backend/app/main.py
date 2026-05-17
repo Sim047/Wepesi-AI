@@ -32,6 +32,9 @@ app.include_router(admin.router, prefix="/admin", tags=["admin"])
 
 @app.get("/health")
 async def health() -> dict[str, str]:
-    async with engine.connect() as connection:
-        await connection.execute(text("select 1"))
+    try:
+        async with engine.connect() as connection:
+            await connection.execute(text("select 1"))
+    except Exception:
+        return {"status": "ok", "service": "wepesi-api", "database": "unavailable"}
     return {"status": "ok", "service": "wepesi-api", "database": "ok"}
