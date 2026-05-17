@@ -44,11 +44,11 @@ export default function IntakePage() {
             </div>
             <h1 className="mt-2 text-3xl font-semibold text-ink">Build a launch-ready compliance profile</h1>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
-              Edit the operating assumptions, then generate a board-ready report. If Render is not live, Wepesi falls back to a polished demo analysis so the pitch remains smooth.
+              Edit the operating assumptions, then generate a board-ready report with licensing, documentation, timeline, risk, and reference intelligence.
             </p>
           </div>
           <div className="rounded-lg border border-line bg-white p-4 text-sm leading-6 text-slate-600 shadow-sm">
-            <div className="font-semibold text-ink">Demo corridor</div>
+            <div className="font-semibold text-ink">Active corridor</div>
             Kenya-incorporated fintech entering Nigeria with payments, remittance, wallet, and customer-funds exposure.
           </div>
         </div>

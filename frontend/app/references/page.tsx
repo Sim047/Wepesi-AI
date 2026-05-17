@@ -45,7 +45,7 @@ export default function ReferencesPage() {
             </div>
             <h1 className="mt-2 text-3xl font-semibold text-ink">Source-aware knowledge base</h1>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
-              The MVP starts with a focused Kenya-Nigeria corpus. The product vision is to grow this into a living regulatory graph for African fintech market expansion.
+              Wepesi starts with a focused Kenya-Nigeria corpus and expands into a living regulatory graph for African fintech market expansion.
             </p>
           </div>
           <div className="rounded-lg border border-line bg-white p-5 shadow-sm">

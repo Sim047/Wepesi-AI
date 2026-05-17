@@ -36,7 +36,7 @@ export default function HomePage() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild variant="signal">
               <Link href="/intake">
-                Run investor demo <ArrowRight className="h-4 w-4" />
+                Start compliance analysis <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
             <Button asChild variant="outline">
@@ -59,7 +59,7 @@ export default function HomePage() {
                 <div className="text-sm font-semibold text-ink">Wepesi readiness report</div>
                 <div className="mt-1 text-sm text-slate-500">Payments and remittance expansion</div>
               </div>
-              <div className="rounded-md bg-mint px-3 py-1 text-xs font-semibold text-signal">Demo ready</div>
+              <div className="rounded-md bg-mint px-3 py-1 text-xs font-semibold text-signal">Ready</div>
             </div>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {proof.map(({ label, value, icon: Icon }) => (
@@ -76,7 +76,7 @@ export default function HomePage() {
                 Investor narrative
               </div>
               <p className="mt-3 text-sm leading-6 text-slate-200">
-                The MVP demonstrates a repeatable workflow for corridor expansion: collect product facts, classify licensing exposure, generate an evidence checklist, and preserve a regulator reference trail.
+                Wepesi provides a repeatable workflow for corridor expansion: collect product facts, classify licensing exposure, generate an evidence checklist, and preserve a regulator reference trail.
               </p>
             </div>
             <div className="mt-5 space-y-3">

@@ -46,8 +46,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           ))}
         </nav>
         <div className="absolute bottom-6 left-5 right-5 rounded-lg border border-line bg-paper p-4">
-          <div className="text-xs font-semibold uppercase tracking-wide text-signal">Investor demo</div>
-          <p className="mt-2 text-sm leading-5 text-slate-600">Live frontend, Supabase schema, and a backend-ready analysis workflow for the Kenya to Nigeria corridor.</p>
+          <div className="text-xs font-semibold uppercase tracking-wide text-signal">Production workspace</div>
+          <p className="mt-2 text-sm leading-5 text-slate-600">Kenya to Nigeria compliance workflows with licensing, documentation, risk, and regulatory-reference intelligence.</p>
         </div>
       </aside>
       <main className="lg:pl-72">{children}</main>

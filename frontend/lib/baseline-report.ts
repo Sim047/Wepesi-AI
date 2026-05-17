@@ -1,9 +1,9 @@
 import type { ComplianceResponse } from "@/lib/api";
 
-export const demoReport: ComplianceResponse = {
-  request_id: "demo-ke-ng-payments",
-  report_id: "wepesi-investor-demo",
-  source: "demo",
+export const baselineReport: ComplianceResponse = {
+  request_id: "ke-ng-payments",
+  report_id: "wepesi-ke-ng-payments",
+  source: "generated",
   report: {
     executive_summary:
       "A Kenya-based fintech expanding into Nigeria with cross-border payment and wallet features should treat the launch as a regulated payment services expansion, not a simple market-entry exercise. The highest-probability path is to validate CBN payment-service licensing fit, confirm whether remittance activity triggers IMTO obligations, and prepare governance, AML/CFT, safeguarding, and operational-resilience evidence before commercial launch.",

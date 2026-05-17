@@ -28,7 +28,7 @@ export default function DashboardPage() {
             <div className="text-sm font-semibold uppercase tracking-wide text-signal">Command center</div>
             <h1 className="mt-2 text-3xl font-semibold text-ink">Expansion readiness cockpit</h1>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
-              Investor-facing snapshot of the MVP workflow: product intake, regulatory classification, launch blockers, and execution plan.
+              Operating snapshot for product intake, regulatory classification, launch blockers, and execution planning.
             </p>
           </div>
           <Button asChild variant="signal">

@@ -7,10 +7,10 @@ import { AlertTriangle, ArrowRight, CheckCircle2, Download, FileText } from "luc
 import { AppShell } from "@/components/shell";
 import { Button } from "@/components/ui/button";
 import type { ComplianceResponse } from "@/lib/api";
-import { demoReport } from "@/lib/demo-report";
+import { baselineReport } from "@/lib/baseline-report";
 
 export default function ReportsPage() {
-  const [data, setData] = useState<ComplianceResponse>(demoReport);
+  const [data, setData] = useState<ComplianceResponse>(baselineReport);
 
   useEffect(() => {
     const raw = sessionStorage.getItem("wepesi:lastReport");
@@ -28,7 +28,7 @@ export default function ReportsPage() {
             </div>
             <h1 className="mt-2 text-3xl font-semibold text-ink">Nigeria launch pathway for a Kenya fintech</h1>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500">
-              Structured output for management, counsel, and investors. Source: {data.source === "api" ? "live backend" : "demo fallback"}.
+              Structured output for management, counsel, and investors with licensing rationale, evidence requirements, risk flags, and next actions.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">

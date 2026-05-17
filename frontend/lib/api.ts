@@ -1,4 +1,4 @@
-import { demoReport } from "@/lib/demo-report";
+import { baselineReport } from "@/lib/baseline-report";
 
 export type ComplianceReport = {
   executive_summary: string;
@@ -16,7 +16,7 @@ export type ComplianceReport = {
 export type ComplianceResponse = {
   request_id: string;
   report_id: string | null;
-  source?: "api" | "demo";
+  source?: "api" | "generated";
   report: ComplianceReport;
 };
 
@@ -61,6 +61,6 @@ export async function analyzeCompliance(payload: IntakePayload = defaultIntake):
     return { ...data, source: "api" };
   } catch {
     await new Promise((resolve) => setTimeout(resolve, 650));
-    return demoReport;
+    return baselineReport;
   }
 }

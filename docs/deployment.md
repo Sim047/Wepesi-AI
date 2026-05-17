@@ -1,33 +1,76 @@
 # Deployment Guide
 
-## Railway
+## Current Production Layout
 
-1. Create PostgreSQL.
-2. Create a FastAPI service from `backend/`.
-3. Create a Next.js service from `frontend/`.
-4. Add Qdrant Cloud or a Qdrant service.
-5. Set environment variables:
-   - `DATABASE_URL`
-   - `QDRANT_URL`
-   - `OPENAI_API_KEY`
-   - `OPENAI_MODEL`
-   - `OPENAI_EMBEDDING_MODEL`
-   - `JWT_SECRET`
-   - `CORS_ORIGINS`
-   - `NEXT_PUBLIC_API_URL`
+- Frontend: Vercel project `frontend`
+- Backend: Render web service `wepesi-api`
+- Database: dedicated Supabase project `Wepesi AI`
+- Vector search: Qdrant Cloud or Render-hosted Qdrant
+- Source repository: `https://github.com/Sim047/Wepesi-AI`
 
-## Render
+## Supabase
 
-1. Create managed PostgreSQL.
-2. Create web service for `backend` using Docker.
-3. Create web service for `frontend` using Docker.
-4. Use Qdrant Cloud for vector search.
-5. Configure the same environment variables.
+Dedicated project:
 
-## Pre-Launch Checklist
+- Name: `Wepesi AI`
+- Project ref: `drhcgdnvgehxjyfaduel`
+- Region: `eu-central-1`
+- API URL: `https://drhcgdnvgehxjyfaduel.supabase.co`
 
-- Add refresh tokens, email verification, and password reset.
-- Run database migrations.
-- Load counsel-reviewed source documents.
-- Validate citations and capital requirements.
-- Add legal disclaimer to generated reports.
+The initial schema is stored in:
+
+```text
+supabase/migrations/20260517000000_initial_schema.sql
+```
+
+The app backend needs the Supabase Postgres connection string in Render:
+
+```text
+DATABASE_URL=postgresql://postgres.<project-ref>:<database-password>@aws-0-eu-central-1.pooler.supabase.com:6543/postgres
+```
+
+Replace `<project-ref>` with `drhcgdnvgehxjyfaduel` and `<database-password>` with the database password from the Supabase dashboard.
+
+## Render Backend
+
+The repository includes a Render Blueprint:
+
+```text
+render.yaml
+```
+
+Create a new Blueprint or Web Service in Render from the GitHub repository and point it at `render.yaml`.
+
+Required Render environment variables:
+
+```text
+DATABASE_URL=<dedicated Supabase Postgres connection string>
+QDRANT_URL=<Qdrant Cloud URL or Render Qdrant URL>
+QDRANT_COLLECTION=regulatory_chunks
+OPENAI_API_KEY=<OpenAI API key>
+OPENAI_MODEL=gpt-5
+OPENAI_EMBEDDING_MODEL=text-embedding-3-small
+JWT_SECRET=<generated secret>
+JWT_ALGORITHM=HS256
+CORS_ORIGINS=<Vercel production URL>
+```
+
+Expected health check:
+
+```text
+https://wepesi-api.onrender.com/health
+```
+
+## Vercel Frontend
+
+Set the frontend environment variable:
+
+```text
+NEXT_PUBLIC_API_URL=https://wepesi-api.onrender.com
+```
+
+Vercel builds from the root and delegates to `frontend/` through `vercel.json`.
+
+## Security Note
+
+The Wepesi tables are intended for backend-only database access. If Supabase client access is introduced in the frontend, enable Row Level Security and add policies before exposing keys to browsers.
