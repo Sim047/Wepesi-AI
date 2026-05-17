@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     jwt_secret: str = Field(default="change-me-in-production")
     jwt_algorithm: str = "HS256"
     cors_origins: str = "http://localhost:3000"
+    cors_origin_regex: str = r"https://.*\.vercel\.app"
 
     @property
     def cors_origin_list(self) -> list[str]:

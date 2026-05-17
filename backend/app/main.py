@@ -1,6 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from sqlalchemy import text
+from sqlalchemy.exc import SQLAlchemyError
 
 from app.api.routes import admin, auth, compliance, references
 from app.core.config import settings
@@ -15,6 +17,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origin_list,
+    allow_origin_regex=settings.cors_origin_regex,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -38,3 +41,15 @@ async def health() -> dict[str, str]:
     except Exception:
         return {"status": "ok", "service": "wepesi-api", "database": "unavailable"}
     return {"status": "ok", "service": "wepesi-api", "database": "ok"}
+
+
+@app.exception_handler(SQLAlchemyError)
+async def database_exception_handler(request: Request, exc: SQLAlchemyError) -> JSONResponse:
+    _ = (request, exc)
+    return JSONResponse(
+        status_code=503,
+        content={
+            "detail": "Database is unavailable. Check the deployed DATABASE_URL secret.",
+            "code": "DATABASE_UNAVAILABLE",
+        },
+    )
