@@ -1,7 +1,8 @@
 import Link from "next/link";
+import type { Route } from "next";
 import { FileText, LayoutDashboard, Library, ShieldCheck } from "lucide-react";
 
-const nav = [
+const nav: Array<{ href: Route; label: string; icon: typeof LayoutDashboard }> = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/intake", label: "Intake", icon: ShieldCheck },
   { href: "/reports", label: "Reports", icon: FileText },
