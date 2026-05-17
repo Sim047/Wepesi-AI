@@ -7,8 +7,10 @@
 }
 
 body {
-  background: #f7f8fb;
-  color: #111827;
+  background:
+    radial-gradient(circle at top left, rgba(7, 132, 127, 0.12), transparent 30rem),
+    linear-gradient(180deg, #f7fafc 0%, #eef4f9 100%);
+  color: #172033;
 }
 
 * {
@@ -18,4 +20,9 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+::selection {
+  background: #dff6ef;
+  color: #0b1220;
 }
