@@ -53,7 +53,7 @@ export type ComplianceResponse = {
   report: ComplianceReport;
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "https://wepesi-api.onrender.com";
 
 export function getToken(): string | null {
   if (typeof window === "undefined") return null;
