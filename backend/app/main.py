@@ -1,3 +1,5 @@
+import logging
+
 from asyncpg.exceptions import PostgresError
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,6 +10,8 @@ from sqlalchemy.exc import SQLAlchemyError
 from app.api.routes import admin, auth, compliance, references
 from app.core.config import settings
 from app.db.session import engine
+
+logger = logging.getLogger("wepesi")
 
 app = FastAPI(
     title="Wepesi API",
@@ -40,13 +44,15 @@ async def health() -> dict[str, str]:
         async with engine.connect() as connection:
             await connection.execute(text("select 1"))
     except Exception:
+        logger.exception("Database health check failed")
         return {"status": "ok", "service": "wepesi-api", "database": "unavailable"}
     return {"status": "ok", "service": "wepesi-api", "database": "ok"}
 
 
 @app.exception_handler(SQLAlchemyError)
 async def database_exception_handler(request: Request, exc: SQLAlchemyError) -> JSONResponse:
-    _ = (request, exc)
+    _ = request
+    logger.exception("Database request failed", exc_info=exc)
     return JSONResponse(
         status_code=503,
         content={
